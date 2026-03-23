@@ -3,7 +3,7 @@
 //  Selección de un servicio por agenda, disponibilidad real desde MongoDB
 // ═══════════════════════════════════════════════════════════════
 
-const API_URL = 'http://localhost:3001'; // ← REEMPLAZAR con tu URL real de Railway
+const API_URL = 'https://happybody-production-b0bf.up.railway.app/api'; // ← REEMPLAZAR con tu URL real de Railway
 
 // ── Estado global ─────────────────────────────────────────────
 let S = {
