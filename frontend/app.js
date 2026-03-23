@@ -64,7 +64,7 @@ async function checkHealth() {
   const dot  = document.getElementById('connection-dot');
   const pill = document.getElementById('connection-pill');
   try {
-    const res  = await fetch(`${API_URL}/health`);
+    const res = await fetch(`https://happybody-production-b0bf.up.railway.app/health`);
     const data = await res.json();
     if (data.ok) {
       pill.textContent     = 'En línea';
@@ -79,8 +79,8 @@ async function checkHealth() {
 async function loadInitialData() {
   try {
     const [svcRes, specRes] = await Promise.all([
-      fetch(`${API_URL}/api/services`),
-      fetch(`${API_URL}/api/specialists`),
+      fetch(`${API_URL}/services`),
+      fetch(`${API_URL}/specialists`),
     ]);
     if (!svcRes.ok || !specRes.ok) throw new Error('Error en la respuesta del servidor');
 
@@ -333,7 +333,7 @@ async function fetchSlots() {
 
   const dateStr = dateToStr(S.date);
   const dur     = S.svc.durationMinutes;
-  const url     = `${API_URL}/api/appointments/available?specialistId=${S.spec.specialistId}&date=${dateStr}&serviceDuration=${dur}`;
+  const url     = `${API_URL}/appointments/available?specialistId=${S.spec.specialistId}&date=${dateStr}&serviceDuration=${dur}`;
 
   try {
     const res  = await fetch(url);
@@ -456,7 +456,7 @@ async function confirmBooking() {
   };
 
   try {
-    const res  = await fetch(`${API_URL}/api/appointments`, {
+    const res  = await fetch(`${API_URL}/appointments`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(body),
