@@ -26,14 +26,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-  origin: (origin, callback) => {
-    // Permitir peticiones sin origin (Postman, curl, etc.)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    console.warn(`⚠️  CORS bloqueado para origen: ${origin}`);
-    callback(new Error('No permitido por CORS'));
-  },
-  methods:     ['GET', 'POST', 'PATCH', 'OPTIONS'],
+  origin: true,
   credentials: true,
 }));
 
