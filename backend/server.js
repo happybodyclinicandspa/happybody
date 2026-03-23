@@ -96,6 +96,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ ok: false, error: 'Error interno del servidor' });
 });
 
+app.get('/seed', async (req, res) => {
+  try {
+    const seed = require('./seed/seedData');
+    await seed();
+    res.json({ ok: true, message: 'Seed ejecutado correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 // ─────────────────────────────────────────────────────────────
 //  ARRANCAR SERVIDOR
 // ─────────────────────────────────────────────────────────────
