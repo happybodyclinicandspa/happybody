@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Happy Body Luxe – Agenda tu cita de medicina estética en Zona Suerte">
+<meta property="og:title" content="Happy Body Luxe · Agenda">
+<meta property="og:description" content="Sistema de citas online para medicina estética">
+<title>Happy Body Luxe · Agenda</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="brand">
+    <img src="data:image/png;base64,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" alt="Happy Body Luxe" style="height:48px;width:auto;object-fit:contain;display:block;">
+  </div>
+  <div class="header-center">Sistema de Agenda</div>
+  <div class="header-right">
+    <div class="header-dot" id="connection-dot"></div>
+    <div class="header-pill" id="connection-pill">Conectando…</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero-band">
+    <div class="hero-left">
+      <h1>Agenda de <em>Tratamientos</em></h1>
+      <div class="gold-line"></div>
+      <p>Lunes a Sábado &nbsp;·&nbsp; 11:00 am – 7:00 pm &nbsp;·&nbsp; Dra. Yesica Valdés</p>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-row">
+    <button class="tab-btn active" onclick="switchTab('agendar')">Nueva Cita</button>
+    <button class="tab-btn" onclick="switchTab('especialistas')">Especialistas</button>
+  </div>
+
+  <!-- ═══ NUEVA CITA ═══ -->
+  <div class="tab-panel active" id="tab-agendar">
+    <div class="booking-layout">
+
+      <!-- PASO 1 -->
+      <div class="panel fade-up">
+        <span class="panel-step">01 — Tratamiento</span>
+        <h3>Selecciona el Servicio</h3>
+        <div class="gold-line"></div>
+        <p class="panel-sub">¿Qué tratamiento desea la paciente?</p>
+        <div class="svc-search-wrap">
+          <span class="svc-search-icon">⌕</span>
+          <input type="text" class="svc-search" id="svc-search"
+            placeholder="Buscar tratamiento…"
+            oninput="filterSvcs(this.value)"
+            autocomplete="off">
+          <button class="svc-search-clear" id="svc-clear" onclick="clearSearch()" title="Limpiar">×</button>
+        </div>
+        <div class="service-list" id="service-list">
+          <div class="loading-overlay">
+            <div class="spinner"></div>
+            <span class="loading-text">Cargando servicios…</span>
+          </div>
+        </div>
+        <div class="svc-no-results" id="svc-no-results">
+          <span class="nr-icon">✦</span>
+          <p>No se encontró ningún tratamiento</p>
+          <p style="margin-top:4px;font-size:11px;opacity:0.7;">Intenta con otra búsqueda</p>
+        </div>
+      </div>
+
+      <!-- PASO 2 -->
+      <div class="panel fade-up">
+        <span class="panel-step">02 — Especialista &amp; Fecha</span>
+        <h3>Elige Especialista</h3>
+        <div class="gold-line"></div>
+        <p class="panel-sub">Filtrado por tratamiento seleccionado</p>
+        <div class="spec-list" id="spec-list">
+          <div class="empty-state"><span class="empty-icon">✦</span><p>Selecciona un tratamiento primero</p></div>
+        </div>
+        <div id="cal-section" style="display:none;margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+          <div class="cal-nav-row">
+            <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+            <span class="cal-month-lbl" id="cal-lbl"></span>
+            <button class="cal-nav" onclick="changeMonth(1)">›</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div id="slots-section" style="display:none;">
+            <div class="slots-label">Horarios disponibles</div>
+            <div id="slots-error" class="error-banner" style="display:none;">
+              <span id="slots-error-msg"></span>
+              <button onclick="retrySlots()">↻</button>
+            </div>
+            <div class="slots-grid" id="slots-grid"></div>
+            <div class="slot-dur-info" id="slot-dur-info" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 3 -->
+      <div class="panel fade-up">
+        <span class="panel-step">03 — Confirmación</span>
+        <h3>Datos de la Paciente</h3>
+        <div class="gold-line"></div>
+        <p class="panel-sub">Revisa y confirma la cita</p>
+        <div id="empty-confirm" class="empty-state">
+          <span class="empty-icon">✦</span>
+          <p>Completa los pasos anteriores</p>
+        </div>
+        <div id="confirm-form" style="display:none;">
+          <div id="confirm-error" class="error-banner" style="display:none;">
+            <span id="confirm-error-msg"></span>
+            <button onclick="document.getElementById('confirm-error').style.display='none'">×</button>
+          </div>
+          <div class="form-field">
+            <label class="form-lbl">Nombre completo</label>
+            <input type="text" id="pat-name" class="form-in" placeholder="Ej. María Fernández López">
+          </div>
+          <div class="form-field">
+            <label class="form-lbl">WhatsApp</label>
+            <input type="text" id="pat-phone" class="form-in" placeholder="Ej. 55 1234 5678">
+          </div>
+          <div class="booking-recap" id="booking-recap"></div>
+          <button class="btn-book" id="btn-book" onclick="confirmBooking()">Confirmar Cita</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ ESPECIALISTAS ═══ -->
+  <div class="tab-panel" id="tab-especialistas">
+    <div class="specs-grid" id="specs-grid">
+      <div class="loading-overlay" style="grid-column:1/-1">
+        <div class="spinner"></div>
+        <span class="loading-text">Cargando especialistas…</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL ÉXITO -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <span class="modal-mark">✦</span>
+    <h2>Cita Confirmada</h2>
+    <div class="gold-line" style="margin:10px auto;width:32px;"></div>
+    <p>La cita ha sido agendada exitosamente</p>
+    <div class="modal-recap" id="modal-recap"></div>
+    <p style="font-size:10px;letter-spacing:1px;">Se enviará recordatorio por WhatsApp 24h antes</p><br>
+    <button class="btn-modal-close" onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

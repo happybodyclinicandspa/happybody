@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Body Clinic — Panel Interno</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:    #0a0808;
+  --deep:     #111010;
+  --charcoal: #1e1b1b;
+  --champagne:#f0ddd0;
+  --gold:     #c4845a;
+  --gold-dim: #a0613a;
+  --ivory:    #faf8f6;
+  --warm:     #f5ede7;
+  --muted:    #8a7e7a;
+  --border:   #e2d5cc;
+  --border-dark:#2a2020;
+  --white:    #ffffff;
+  --shadow:   0 4px 32px rgba(10,8,8,0.09);
+  --shadow-lg:0 16px 60px rgba(10,8,8,0.16);
+  --green:    #2d7a4a;
+  --green-bg: #e8f5ee;
+  --red:      #a03030;
+  --red-bg:   #fdf0f0;
+  --blue:     #2a4a7a;
+  --blue-bg:  #eef2fa;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  font-family:'Jost',sans-serif;
+  background:var(--deep);
+  color:var(--black);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(196,132,90,0.06) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(196,132,90,0.04) 0%,transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── LOGIN ────────────────────────────────────────────── */
+#login-screen{
+  position:relative;z-index:1;
+  width:100%;max-width:400px;
+  padding:20px;
+}
+
+.login-box{
+  background:var(--ivory);
+  padding:48px 40px;
+  position:relative;
+}
+.login-box::before,.login-box::after{
+  content:'';position:absolute;width:24px;height:24px;
+}
+.login-box::before{top:0;left:0;border-top:1px solid var(--gold);border-left:1px solid var(--gold);}
+.login-box::after{bottom:0;right:0;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold);}
+
+.login-logo{
+  text-align:center;margin-bottom:32px;
+}
+.login-logo img{height:52px;width:auto;}
+
+.login-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:300;font-style:italic;
+  color:var(--deep);text-align:center;margin-bottom:6px;
+}
+.login-sub{
+  font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);text-align:center;margin-bottom:28px;
+}
+
+.login-field{margin-bottom:16px;}
+.login-label{
+  display:block;font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;
+}
+.login-input{
+  width:100%;padding:12px 14px;
+  border:1px solid var(--border);background:var(--white);
+  font-family:'Jost',sans-serif;font-size:13px;
+  color:var(--deep);outline:none;transition:border 0.2s;
+}
+.login-input:focus{border-color:var(--gold);}
+
+.login-error{
+  background:var(--red-bg);border:1px solid #e0c0c0;
+  color:var(--red);font-size:12px;padding:10px 14px;
+  margin-bottom:14px;display:none;
+}
+.login-error.show{display:block;}
+
+.btn-login{
+  width:100%;padding:14px;
+  background:var(--deep);color:var(--champagne);
+  border:none;font-family:'Jost',sans-serif;
+  font-size:10px;font-weight:600;letter-spacing:4px;text-transform:uppercase;
+  cursor:pointer;transition:background 0.2s;
+  position:relative;overflow:hidden;
+}
+.btn-login::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(196,132,90,0.15),transparent);
+  transform:translateX(-100%);transition:transform 0.5s;
+}
+.btn-login:hover{background:var(--charcoal);}
+.btn-login:hover::after{transform:translateX(100%);}
+.btn-login:disabled{background:var(--muted);cursor:wait;}
+
+.login-disclaimer{
+  margin-top:16px;font-size:10px;color:var(--muted);
+  text-align:center;letter-spacing:0.3px;
+}
+
+/* ── ADMIN PANEL ──────────────────────────────────────── */
+#admin-panel{
+  display:none;
+  flex-direction:column;
+  min-height:100vh;
+  width:100%;
+  background:var(--ivory);
+  position:relative;z-index:1;
+}
+
+.admin-header{
+  background:var(--deep);
+  border-bottom:1px solid var(--border-dark);
+  padding:0 40px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.admin-brand{display:flex;align-items:center;gap:14px;}
+.admin-brand img{height:38px;width:auto;}
+.admin-title-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px;font-weight:300;color:var(--champagne);
+  letter-spacing:2px;text-transform:uppercase;
+  padding-left:14px;border-left:1px solid var(--border-dark);
+}
+.admin-header-right{display:flex;align-items:center;gap:14px;}
+.admin-user-pill{
+  font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(196,132,90,0.4);
+  padding:5px 12px;
+}
+.btn-logout{
+  background:none;border:1px solid var(--border-dark);
+  color:var(--muted);font-family:'Jost',sans-serif;
+  font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 14px;cursor:pointer;transition:all 0.2s;
+}
+.btn-logout:hover{border-color:var(--gold);color:var(--champagne);}
+
+.admin-main{
+  max-width:1200px;margin:0 auto;
+  padding:40px 32px;flex:1;
+}
+
+.admin-page-title{
+  margin-bottom:32px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--border);
+}
+.admin-page-title h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;font-style:italic;
+  color:var(--deep);margin-bottom:4px;
+}
+.admin-page-title p{font-size:12px;color:var(--muted);font-weight:300;letter-spacing:0.5px;}
+
+/* ── FILTERS ────────────────────────────────────────────── */
+.filters-bar{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:16px;margin-bottom:28px;align-items:end;
+}
+
+.filter-group{}
+.filter-label{
+  display:block;font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;
+}
+.filter-select,.filter-input{
+  width:100%;padding:11px 14px;
+  border:1px solid var(--border);background:var(--white);
+  font-family:'Jost',sans-serif;font-size:13px;
+  color:var(--deep);outline:none;cursor:pointer;
+  transition:border 0.2s;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7e7a'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px;
+}
+.filter-input{background-image:none;padding-right:14px;cursor:text;}
+.filter-select:focus,.filter-input:focus{border-color:var(--gold);}
+
+.btn-search{
+  padding:11px 28px;
+  background:var(--deep);color:var(--champagne);
+  border:none;font-family:'Jost',sans-serif;
+  font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:background 0.2s;white-space:nowrap;
+  height:44px;
+}
+.btn-search:hover{background:var(--charcoal);}
+
+/* ── STATS ROW ─────────────────────────────────────────── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-bottom:28px;
+}
+.stat-box{
+  background:var(--white);border:1px solid var(--border);
+  padding:16px 20px;position:relative;
+}
+.stat-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;background:linear-gradient(90deg,var(--gold),transparent);
+}
+.stat-box-label{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.stat-box-value{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--deep);margin:4px 0 0;}
+
+/* ── TABLE ──────────────────────────────────────────────── */
+.table-wrapper{
+  background:var(--white);border:1px solid var(--border);
+  overflow:hidden;
+}
+
+.table-header{
+  padding:16px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.table-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:400;color:var(--deep);
+}
+.table-count{
+  font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);
+}
+
+table{width:100%;border-collapse:collapse;}
+thead th{
+  padding:12px 16px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);background:var(--ivory);
+  border-bottom:1px solid var(--border);
+  text-align:left;white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid rgba(226,213,204,0.5);transition:background 0.15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--warm);}
+tbody td{padding:14px 16px;font-size:12px;color:var(--deep);vertical-align:middle;}
+
+.td-name{font-weight:600;font-size:13px;}
+.td-service{color:var(--deep);}
+.td-specialist{
+  display:inline-flex;align-items:center;gap:7px;
+}
+.spec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.td-time{font-weight:500;color:var(--gold-dim);}
+.td-duration{color:var(--muted);font-size:11px;}
+
+.status-badge{
+  display:inline-block;font-size:9px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border:1px solid;
+}
+.status-confirmed{background:var(--green-bg);color:var(--green);border-color:#a0d0b0;}
+.status-cancelled{background:var(--red-bg);color:var(--red);border-color:#e0b0b0;}
+.status-completed{background:var(--blue-bg);color:var(--blue);border-color:#b0c4e0;}
+
+.td-actions{display:flex;gap:6px;flex-wrap:nowrap;}
+.btn-action{
+  padding:4px 10px;border:1px solid var(--border);background:none;
+  font-family:'Jost',sans-serif;font-size:9px;font-weight:600;
+  letter-spacing:0.8px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;
+}
+.btn-action:hover{border-color:var(--gold);color:var(--gold-dim);}
+.btn-cancel-action{color:var(--red);}
+.btn-cancel-action:hover{border-color:var(--red);background:var(--red-bg);}
+
+.empty-table{
+  text-align:center;padding:60px 20px;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:18px;color:var(--muted);
+}
+
+/* ── LOADING ────────────────────────────────────────────── */
+.spinner{
+  width:24px;height:24px;
+  border:2px solid var(--border);border-top-color:var(--gold);
+  border-radius:50%;animation:spin 0.8s linear infinite;
+  margin:0 auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-row td{text-align:center;padding:40px;}
+
+/* ── CONFIRM CANCEL MODAL ─────────────────────────────── */
+.modal-bg{
+  display:none;position:fixed;inset:0;
+  background:rgba(10,8,8,0.7);z-index:999;
+  align-items:center;justify-content:center;backdrop-filter:blur(6px);
+}
+.modal-bg.open{display:flex;}
+.modal-box{
+  background:var(--ivory);padding:40px;max-width:380px;width:90%;
+  position:relative;animation:mIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  text-align:center;
+}
+.modal-box::before,.modal-box::after{content:'';position:absolute;width:18px;height:18px;}
+.modal-box::before{top:0;left:0;border-top:1px solid var(--gold);border-left:1px solid var(--gold);}
+.modal-box::after{bottom:0;right:0;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold);}
+@keyframes mIn{from{opacity:0;transform:scale(0.9) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-icon{font-size:36px;margin-bottom:12px;}
+.modal-box h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;font-style:italic;margin-bottom:8px;}
+.modal-box p{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.modal-detail{
+  background:var(--warm);border:1px solid var(--border);
+  padding:12px 14px;font-size:12px;line-height:1.9;text-align:left;margin-bottom:20px;
+}
+.modal-detail strong{color:var(--gold-dim);}
+.modal-actions{display:flex;gap:10px;}
+.btn-modal-cancel{
+  flex:1;padding:12px;background:none;
+  border:1px solid var(--border);color:var(--muted);
+  font-family:'Jost',sans-serif;font-size:10px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;
+}
+.btn-modal-cancel:hover{border-color:var(--muted);}
+.btn-modal-confirm{
+  flex:1;padding:12px;background:var(--red);color:var(--white);
+  border:none;font-family:'Jost',sans-serif;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;transition:background 0.2s;
+}
+.btn-modal-confirm:hover{background:#8a2828;}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:768px){
+  .admin-header{padding:0 16px;}
+  .admin-title-text{display:none;}
+  .admin-main{padding:24px 16px;}
+  .filters-bar{grid-template-columns:1fr;gap:12px;}
+  .stats-row{grid-template-columns:1fr 1fr;gap:12px;}
+  .admin-page-title h1{font-size:24px;}
+  table{font-size:11px;}
+  thead th,tbody td{padding:10px 10px;}
+  .td-actions{flex-direction:column;}
+  .modal-box{padding:28px 20px;}
+}
+@media(max-width:480px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .login-box{padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <!-- Logo embebido igual que en index.html — reemplazar si se actualiza -->
+      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--deep);letter-spacing:2px;text-align:center;">
+        Happy Body
+        <div style="font-size:11px;letter-spacing:5px;color:var(--gold);margin-top:2px;text-transform:uppercase;">Clinic &amp; Spa</div>
+      </div>
+    </div>
+
+    <div class="login-title">Panel Interno</div>
+    <div class="login-sub">Acceso solo para personal de la clínica</div>
+
+    <div class="login-error" id="login-error">Usuario o contraseña incorrectos</div>
+
+    <div class="login-field">
+      <label class="login-label" for="login-user">Usuario</label>
+      <input type="text" id="login-user" class="login-input"
+             placeholder="Ingresa tu usuario"
+             autocomplete="username"
+             onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+
+    <div class="login-field">
+      <label class="login-label" for="login-pass">Contraseña</label>
+      <input type="password" id="login-pass" class="login-input"
+             placeholder="••••••••"
+             autocomplete="current-password"
+             onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+
+    <button class="btn-login" id="btn-login" onclick="doLogin()">Ingresar</button>
+
+    <p class="login-disclaimer">
+      Este panel es exclusivo para el equipo de Happy Body Clinic &amp; Spa.<br>
+      Acceso no autorizado está prohibido.
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     ADMIN PANEL
+══════════════════════════════════════════════════════ -->
+<div id="admin-panel">
+
+  <header class="admin-header">
+    <div class="admin-brand">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--champagne);letter-spacing:2px;">
+        Happy Body
+      </div>
+      <div class="admin-title-text">Panel de Citas</div>
+    </div>
+    <div class="admin-header-right">
+      <span class="admin-user-pill" id="admin-user-label">Administrador</span>
+      <button class="btn-logout" onclick="doLogout()">Salir</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <div class="admin-page-title">
+      <h1>Citas Agendadas</h1>
+      <p>Consulta y gestión de citas por especialista y fecha</p>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters-bar">
+      <div class="filter-group">
+        <label class="filter-label">Especialista</label>
+        <select class="filter-select" id="filter-spec">
+          <option value="">— Todas las especialistas —</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Fecha</label>
+        <input type="date" class="filter-input" id="filter-date">
+      </div>
+      <button class="btn-search" onclick="loadAppointments()">Buscar</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-box">
+        <div class="stat-box-label">Total citas</div>
+        <div class="stat-box-value" id="stat-total">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">Confirmadas</div>
+        <div class="stat-box-value" id="stat-confirmed">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">Canceladas</div>
+        <div class="stat-box-value" id="stat-cancelled">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-label">Completadas</div>
+        <div class="stat-box-value" id="stat-completed">—</div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+      <div class="table-header">
+        <h2>Listado de Citas</h2>
+        <span class="table-count" id="table-count"></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Servicio</th>
+              <th>Especialista</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Duración</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-tbody">
+            <tr>
+              <td colspan="8" class="empty-table">Selecciona un filtro y presiona Buscar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL CANCELAR -->
+<div class="modal-bg" id="modal-cancel">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <h3>Cancelar cita</h3>
+    <p>¿Estás segura de que deseas cancelar esta cita? Esta acción no se puede deshacer.</p>
+    <div class="modal-detail" id="modal-cancel-detail"></div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeCancelModal()">No, volver</button>
+      <button class="btn-modal-confirm" id="btn-confirm-cancel" onclick="executeCancel()">Sí, cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  CONFIGURACIÓN
+// ═══════════════════════════════════════════════════════════
+
+const API_URL = window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3001'
+  : 'https://TU-API.up.railway.app'; // ← Mismo que en app.js
+
+// ── Credenciales de acceso ─────────────────────────────────
+// ⚠️ IMPORTANTE: Cambia estos valores antes de poner en producción
+// Puedes agregar tantos usuarios como necesites
+const USERS = [
+  { username: 'admin',   password: 'happybody2024',  label: 'Administrador'   },
+  { username: 'recep',   password: 'clinica2024',    label: 'Recepcionista'   },
+  { username: 'yesica',  password: 'dra2024',        label: 'Dra. Yesica'     },
+];
+
+// Colores por especialista (para el punto de color en la tabla)
+const SPEC_COLORS = {
+  sp1: '#9b4f6e',
+  sp2: '#c0394a',
+  sp3: '#4a7a6e',
+  sp4: '#5a6e9b',
+  sp5: '#7a4a9b',
+};
+
+// ═══════════════════════════════════════════════════════════
+//  ESTADO
+// ═══════════════════════════════════════════════════════════
+let A = {
+  specialists:   [],
+  appointments:  [],
+  cancelTargetId: null,
+  loggedUser:    null,
+};
+
+// ═══════════════════════════════════════════════════════════
+//  LOGIN
+// ═══════════════════════════════════════════════════════════
+
+function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value.trim();
+  const btn  = document.getElementById('btn-login');
+  const err  = document.getElementById('login-error');
+
+  if (!user || !pass) {
+    err.textContent = 'Completa usuario y contraseña';
+    err.classList.add('show');
+    return;
+  }
+
+  const found = USERS.find(u => u.username === user && u.password === pass);
+  if (!found) {
+    err.classList.add('show');
+    document.getElementById('login-pass').value = '';
+    return;
+  }
+
+  // Login correcto
+  err.classList.remove('show');
+  A.loggedUser = found;
+
+  // Guardar sesión en sessionStorage (dura mientras esté abierta la pestaña)
+  sessionStorage.setItem('hb_admin_user', JSON.stringify(found));
+
+  showPanel();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('hb_admin_user');
+  A.loggedUser = null;
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.body.style.display = 'flex';
+}
+
+function showPanel() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.body.style.display    = 'block';
+  document.getElementById('admin-panel').style.display = 'flex';
+  document.getElementById('admin-user-label').textContent = A.loggedUser.label;
+  initPanel();
+}
+
+// ── Verificar sesión al cargar ────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = sessionStorage.getItem('hb_admin_user');
+  if (saved) {
+    try {
+      A.loggedUser = JSON.parse(saved);
+      showPanel();
+    } catch { sessionStorage.removeItem('hb_admin_user'); }
+  }
+
+  // Poner fecha de hoy como default en el filtro
+  const today = new Date();
+  document.getElementById('filter-date').value = dateToStr(today);
+});
+
+// ═══════════════════════════════════════════════════════════
+//  INICIALIZACIÓN DEL PANEL
+// ═══════════════════════════════════════════════════════════
+
+async function initPanel() {
+  await loadSpecialists();
+  // Cargar citas del día de hoy automáticamente
+  await loadAppointments();
+}
+
+async function loadSpecialists() {
+  try {
+    const res  = await fetch(`${API_URL}/api/specialists`);
+    const data = await res.json();
+    if (!data.ok) return;
+    A.specialists = data.data;
+
+    const sel = document.getElementById('filter-spec');
+    sel.innerHTML = '<option value="">— Todas las especialistas —</option>';
+    A.specialists.forEach(sp => {
+      const opt = document.createElement('option');
+      opt.value       = sp.specialistId;
+      opt.textContent = sp.name;
+      sel.appendChild(opt);
+    });
+  } catch (err) {
+    console.error('Error cargando especialistas:', err);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CARGA DE CITAS
+// ═══════════════════════════════════════════════════════════
+
+async function loadAppointments() {
+  const specId = document.getElementById('filter-spec').value;
+  const date   = document.getElementById('filter-date').value;
+  const tbody  = document.getElementById('appointments-tbody');
+
+  // Mostrar spinner
+  tbody.innerHTML = `<tr class="loading-row"><td colspan="8"><div class="spinner"></div></td></tr>`;
+
+  const params = new URLSearchParams();
+  if (specId) params.append('specialistId', specId);
+  if (date)   params.append('date', date);
+
+  try {
+    const res  = await fetch(`${API_URL}/api/appointments?${params.toString()}`);
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Error al cargar citas');
+
+    A.appointments = data.data || [];
+    renderTable();
+
+  } catch (err) {
+    console.error('Error cargando citas:', err);
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-table" style="color:#a03030;">Error al cargar citas. Verifica la conexión con el servidor.</td></tr>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER DE TABLA
+// ═══════════════════════════════════════════════════════════
+
+function renderTable() {
+  const tbody = document.getElementById('appointments-tbody');
+  const count = document.getElementById('table-count');
+
+  const total     = A.appointments.length;
+  const confirmed = A.appointments.filter(a => a.status === 'confirmed').length;
+  const cancelled = A.appointments.filter(a => a.status === 'cancelled').length;
+  const completed = A.appointments.filter(a => a.status === 'completed').length;
+
+  document.getElementById('stat-total').textContent     = total;
+  document.getElementById('stat-confirmed').textContent = confirmed;
+  document.getElementById('stat-cancelled').textContent = cancelled;
+  document.getElementById('stat-completed').textContent = completed;
+  count.textContent = total > 0 ? `${total} cita${total > 1 ? 's' : ''}` : '';
+
+  if (total === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-table">No hay citas para este filtro</td></tr>`;
+    return;
+  }
+
+  // Ordenar por fecha y hora
+  const sorted = [...A.appointments].sort((a, b) => {
+    if (a.date < b.date) return -1;
+    if (a.date > b.date) return 1;
+    return a.startTime.localeCompare(b.startTime);
+  });
+
+  tbody.innerHTML = sorted.map(appt => {
+    const sp       = A.specialists.find(s => s.specialistId === appt.specialistId);
+    const spName   = sp ? sp.name : appt.specialistId;
+    const spColor  = SPEC_COLORS[appt.specialistId] || '#8a7e7a';
+    const dateDisp = formatDate(appt.date);
+    const timeDisp = fmt(appt.startTime) + ' – ' + fmt(appt.endTime);
+    const dur      = durLabel(appt.durationMinutes);
+    const svcName  = appt.serviceNames || appt.serviceId;
+
+    const statusMap = {
+      confirmed: '<span class="status-badge status-confirmed">Confirmada</span>',
+      cancelled:  '<span class="status-badge status-cancelled">Cancelada</span>',
+      completed:  '<span class="status-badge status-completed">Completada</span>',
+    };
+    const statusHtml = statusMap[appt.status] || `<span class="status-badge">${appt.status}</span>`;
+
+    const actionsHtml = appt.status === 'confirmed' ? `
+      <button class="btn-action" onclick="markCompleted('${appt._id}')">✓ Completar</button>
+      <button class="btn-action btn-cancel-action" onclick="openCancelModal('${appt._id}')">✕ Cancelar</button>
+    ` : '—';
+
+    return `<tr>
+      <td>
+        <div class="td-name">${escHtml(appt.patientName)}</div>
+        ${appt.patientPhone ? `<div style="font-size:11px;color:var(--muted);">${escHtml(appt.patientPhone)}</div>` : ''}
+      </td>
+      <td class="td-service">${escHtml(svcName)}</td>
+      <td>
+        <div class="td-specialist">
+          <span class="spec-dot" style="background:${spColor};"></span>
+          ${escHtml(spName)}
+        </div>
+      </td>
+      <td>${dateDisp}</td>
+      <td class="td-time">${timeDisp}</td>
+      <td class="td-duration">${dur}</td>
+      <td>${statusHtml}</td>
+      <td><div class="td-actions">${actionsHtml}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  ACCIONES SOBRE CITAS
+// ═══════════════════════════════════════════════════════════
+
+async function markCompleted(id) {
+  try {
+    const res  = await fetch(`${API_URL}/api/appointments/${id}/complete`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    await loadAppointments();
+  } catch (err) {
+    alert('Error al completar la cita: ' + err.message);
+  }
+}
+
+let cancelTargetId = null;
+
+function openCancelModal(id) {
+  cancelTargetId = id;
+  const appt = A.appointments.find(a => a._id === id);
+  if (!appt) return;
+
+  const sp      = A.specialists.find(s => s.specialistId === appt.specialistId);
+  const spName  = sp ? sp.name : appt.specialistId;
+  const svcName = appt.serviceNames || appt.serviceId;
+
+  document.getElementById('modal-cancel-detail').innerHTML = `
+    <div>👤 <strong>Paciente:</strong> ${escHtml(appt.patientName)}</div>
+    <div>✦ <strong>Servicio:</strong> ${escHtml(svcName)}</div>
+    <div>◆ <strong>Especialista:</strong> ${escHtml(spName)}</div>
+    <div>◈ <strong>Fecha:</strong> ${formatDate(appt.date)}</div>
+    <div>◆ <strong>Hora:</strong> ${fmt(appt.startTime)} – ${fmt(appt.endTime)}</div>`;
+
+  document.getElementById('modal-cancel').classList.add('open');
+}
+
+function closeCancelModal() {
+  cancelTargetId = null;
+  document.getElementById('modal-cancel').classList.remove('open');
+}
+
+async function executeCancel() {
+  if (!cancelTargetId) return;
+  const btn = document.getElementById('btn-confirm-cancel');
+  btn.disabled    = true;
+  btn.textContent = 'Cancelando…';
+
+  try {
+    const res  = await fetch(`${API_URL}/api/appointments/${cancelTargetId}/cancel`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error);
+    closeCancelModal();
+    await loadAppointments();
+  } catch (err) {
+    alert('Error al cancelar: ' + err.message);
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = 'Sí, cancelar';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  UTILIDADES
+// ═══════════════════════════════════════════════════════════
+
+function fmt(t) {
+  if (!t) return '—';
+  const [hh, mm] = t.split(':');
+  const h = +hh;
+  return `${h > 12 ? h - 12 : h}:${mm} ${h >= 12 ? 'pm' : 'am'}`;
+}
+
+function dateToStr(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function formatDate(str) {
+  if (!str) return '—';
+  const [y, m, d] = str.split('-');
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const days   = ['dom','lun','mar','mié','jue','vie','sáb'];
+  const dow    = new Date(+y, +m - 1, +d).getDay();
+  return `${days[dow]} ${d} ${months[+m - 1]} ${y}`;
+}
+
+function durLabel(min) {
+  if (!min) return '—';
+  if (min < 60)       return `${min} min`;
+  if (min === 60)     return '1 hora';
+  if (min % 60 === 0) return `${min/60} horas`;
+  return `${Math.floor(min/60)}h ${min%60}min`;
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

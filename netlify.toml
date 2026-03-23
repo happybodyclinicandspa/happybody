@@ -1,0 +1,13 @@
+[build]
+  base    = "frontend"
+  publish = "frontend"
+  command = "echo 'Static site — no build step needed'"
+
+# Redirige todas las rutas al index.html (necesario para SPA)
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "18"
