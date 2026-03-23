@@ -12,6 +12,8 @@ const app = express();
 // ─────────────────────────────────────────────────────────────
 app.use(helmet());
 
+console.log
+
 // CORS: permite peticiones desde el frontend
 const allowedOrigins = [
   process.env.FRONTEND_URL,
@@ -104,11 +106,11 @@ app.use((err, req, res, next) => {
 // ─────────────────────────────────────────────────────────────
 //  ARRANCAR SERVIDOR
 // ─────────────────────────────────────────────────────────────
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
     console.log(`   Health check: http://localhost:${PORT}/health`);
     console.log(`   Ambiente: ${process.env.NODE_ENV || 'development'}`);
   });
