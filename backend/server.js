@@ -4,6 +4,7 @@ const mongoose  = require('mongoose');
 const cors      = require('cors');
 const helmet    = require('helmet');
 const rateLimit = require('express-rate-limit');
+const runSeed = require('./seed/seedData');
 
 const app = express();
 
@@ -12,7 +13,6 @@ const app = express();
 // ─────────────────────────────────────────────────────────────
 app.use(helmet());
 
-console.log
 
 // CORS: permite peticiones desde el frontend
 const allowedOrigins = [
@@ -78,14 +78,19 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/seed', async (req, res) => {
+  try {
+    await runSeed();
+    res.json({ ok: true, message: 'Seed ejecutado correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ ok: false, error: error.message });
+  }
+});
+
 app.use('/api/services',      require('./routes/services'));
 app.use('/api/specialists',   require('./routes/specialists'));
 app.use('/api/appointments',  require('./routes/appointments'));
-
-// Ruta no encontrada
-app.use((req, res) => {
-  res.status(404).json({ ok: false, error: `Ruta ${req.method} ${req.path} no existe` });
-});
 
 // Error handler global
 app.use((err, req, res, next) => {
@@ -94,17 +99,6 @@ app.use((err, req, res, next) => {
     return res.status(403).json({ ok: false, error: 'CORS: origen no permitido' });
   }
   res.status(500).json({ ok: false, error: 'Error interno del servidor' });
-});
-
-app.get('/seed', async (req, res) => {
-  try {
-    const seed = require('./seed/seedData');
-    await seed();
-    res.json({ ok: true, message: 'Seed ejecutado correctamente' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ ok: false, error: error.message });
-  }
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -118,4 +112,9 @@ connectDB().then(() => {
     console.log(`   Health check: http://localhost:${PORT}/health`);
     console.log(`   Ambiente: ${process.env.NODE_ENV || 'development'}`);
   });
+});
+
+// Ruta no encontrada
+app.use((req, res) => {
+  res.status(404).json({ ok: false, error: `Ruta ${req.method} ${req.path} no existe` });
 });
