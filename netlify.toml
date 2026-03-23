@@ -1,6 +1,6 @@
 [build]
   base    = "frontend"
-  publish = "frontend"
+  publish = "."
   command = "echo 'Static site — no build step needed'"
 
 # Redirige todas las rutas al index.html (necesario para SPA)
