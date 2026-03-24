@@ -427,8 +427,10 @@ function updateConfirm() {
 
 // ── POST a la API ─────────────────────────────────────────────
 async function confirmBooking() {
-  const name  = document.getElementById('pat-name').value.trim();
-  const phone = document.getElementById('pat-phone').value.trim();
+  const name    = document.getElementById('pat-name').value.trim();
+  const prefix  = document.getElementById('pat-country')?.value || '+507';
+  const phoneRaw= document.getElementById('pat-phone').value.trim();
+  const phone   = phoneRaw ? `${prefix} ${phoneRaw}` : '';
   if (!name) { document.getElementById('pat-name').focus(); return; }
 
   const btn    = document.getElementById('btn-book');
@@ -505,6 +507,8 @@ function closeModal() {
   S.blockedSlots   = [];
   document.getElementById('pat-name').value  = '';
   document.getElementById('pat-phone').value = '';
+  const pc = document.getElementById('pat-country');
+  if (pc) pc.value = '+507';
   document.getElementById('confirm-error').style.display = 'none';
   clearSearch();
   renderSvcs();

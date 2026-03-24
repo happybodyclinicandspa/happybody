@@ -829,3 +829,34 @@ body::before{
   margin-bottom:4px;border-radius:2px;
 }
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── PHONE WITH COUNTRY CODE ── */
+.phone-wrap{display:flex;gap:0;}
+.phone-prefix{
+  width:110px;flex-shrink:0;
+  border-right:none;
+  border-radius:0;
+  font-size:13px;
+  appearance:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7e7a'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  padding-right:28px;
+  cursor:pointer;
+}
+.phone-prefix:focus{border-color:var(--gold);z-index:1;position:relative;}
+.phone-number{flex:1;border-radius:0;}
+.phone-number:focus{border-color:var(--gold);z-index:1;position:relative;}
+
+/* ── TAB LINK BUTTON (Modificar Cita) ── */
+.tab-btn-link{
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  color:var(--gold-dim);
+  border-bottom-color:transparent !important;
+  font-style:italic;
+}
+.tab-btn-link:hover{color:var(--gold);border-bottom-color:transparent !important;}
+.tab-btn-link::before{content:'✦';margin-right:5px;font-size:8px;font-style:normal;}
