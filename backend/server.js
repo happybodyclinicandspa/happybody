@@ -26,8 +26,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-  origin: true,
-  credentials: true,
+  origin: '*',
 }));
 
 // Rate limiting: máximo 120 requests por IP cada 15 minutos
