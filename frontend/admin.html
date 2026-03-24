@@ -349,106 +349,158 @@ tbody td{padding:14px 16px;font-size:12px;color:var(--deep);vertical-align:middl
 }
 .btn-modal-confirm:hover{background:#8a2828;}
 
-/* ── RESPONSIVE ─────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — 100% mobile-first
+══════════════════════════════════════════════════════════ */
  
 /* ── TABLET (≤ 1024px) ── */
 @media(max-width:1024px){
-  .admin-main{padding:32px 24px;}
-  .stats-row{grid-template-columns:repeat(2,1fr);gap:14px;}
+  .admin-main{padding:28px 20px;}
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:12px;}
 }
  
 /* ── MOBILE (≤ 768px) ── */
 @media(max-width:768px){
+ 
   /* Header */
-  .admin-header{padding:0 16px;height:56px;}
+  .admin-header{padding:0 14px;height:52px;}
   .admin-title-text{display:none;}
   .admin-user-pill{display:none;}
+  .btn-logout{padding:5px 12px;font-size:9px;}
  
   /* Main */
-  .admin-main{padding:20px 14px;}
+  .admin-main{padding:18px 12px;}
  
-  /* Título de página */
-  .admin-page-title{margin-bottom:20px;padding-bottom:16px;}
-  .admin-page-title h1{font-size:22px;}
+  /* Título */
+  .admin-page-title{margin-bottom:18px;padding-bottom:14px;}
+  .admin-page-title h1{font-size:20px;}
   .admin-page-title p{font-size:11px;}
  
-  /* Filtros: columna única, botón ancho completo */
-  .filters-bar{
-    grid-template-columns:1fr;
-    gap:10px;margin-bottom:18px;
-  }
-  .btn-search{width:100%;height:46px;font-size:11px;}
+  /* Filtros: columna única */
+  .filters-bar{grid-template-columns:1fr;gap:10px;margin-bottom:16px;}
+  .btn-search{width:100%;height:46px;}
  
-  /* Stats: 2 columnas */
-  .stats-row{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
-  .stat-box{padding:12px 14px;}
+  /* Stats: 2×2 */
+  .stats-row{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+  .stat-box{padding:11px 12px;}
   .stat-box-value{font-size:22px;}
  
-  /* Tabla — scroll horizontal en contenedor */
-  .table-wrapper{overflow:hidden;}
-  .table-wrapper > div{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  table{min-width:560px;}
-  thead th{padding:10px 10px;font-size:8px;}
-  tbody td{padding:10px 10px;font-size:11px;}
+  /* ── TABLA → TARJETAS en móvil ──────────────────────────
+     Técnica: ocultar thead y convertir cada <tr> en una
+     tarjeta usando data-label en cada <td> para mostrar
+     el nombre del campo. Sin scroll horizontal. */
  
-  /* Columnas menos importantes: ocultar en móvil */
-  th:nth-child(6), td:nth-child(6){display:none;} /* Duración */
+  .table-header{padding:12px 14px;}
+  .table-header h2{font-size:15px;}
  
-  /* Nombre paciente */
-  .td-name{font-size:12px;}
+  /* Ocultar cabecera de tabla */
+  thead{display:none;}
  
-  /* Acciones: columna vertical */
-  .td-actions{flex-direction:column;gap:4px;}
-  .btn-action{padding:5px 8px;font-size:8px;width:100%;text-align:center;}
+  /* Cada fila = tarjeta */
+  tbody tr{
+    display:block;
+    border:1px solid var(--border);
+    border-bottom:none;
+    margin-bottom:10px;
+    background:var(--white);
+    border-radius:0;
+    padding:0;
+  }
+  tbody tr:last-child{border-bottom:1px solid var(--border);margin-bottom:0;}
+  tbody tr:hover{background:var(--warm);}
+ 
+  /* Cada celda = fila con label */
+  tbody td{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 14px;
+    font-size:12px;
+    border-bottom:1px solid rgba(226,213,204,0.4);
+    border-left:none;
+    text-align:right;
+  }
+  tbody td:last-child{border-bottom:none;}
+ 
+  /* Label a la izquierda via data-label */
+  tbody td::before{
+    content:attr(data-label);
+    font-size:9px;font-weight:700;
+    letter-spacing:1px;text-transform:uppercase;
+    color:var(--muted);
+    white-space:nowrap;
+    flex-shrink:0;
+    padding-top:1px;
+    text-align:left;
+    min-width:90px;
+  }
+ 
+  /* Celda de paciente: nombre prominente, alineado izquierda */
+  tbody td.td-cell-patient{
+    flex-direction:column;
+    align-items:flex-start;
+    background:var(--ivory);
+    border-left:3px solid var(--gold);
+    padding:12px 14px;
+  }
+  tbody td.td-cell-patient::before{display:none;}
+ 
+  /* Acciones al final */
+  .td-actions{
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:6px;
+    justify-content:flex-end;
+  }
+  .btn-action{padding:6px 12px;font-size:9px;min-height:34px;}
+ 
+  /* Status badge alineado derecha */
+  .status-badge{font-size:9px;}
+ 
+  /* Fila vacía / loading */
+  .empty-table,.loading-row td{padding:40px 20px;font-size:14px;}
+  .loading-row td{display:table-cell;text-align:center;}
  
   /* Modal */
-  .modal-box{padding:28px 18px;}
-  .modal-box h3{font-size:18px;}
-  .modal-actions{flex-direction:column;}
+  .modal-box{padding:28px 16px;}
+  .modal-box h3{font-size:17px;}
+  .modal-actions{flex-direction:column;gap:8px;}
   .btn-modal-cancel,.btn-modal-confirm{padding:13px;}
  
   /* Login */
-  .login-box{padding:36px 24px;}
-  #login-screen{padding:16px;}
+  #login-screen{padding:14px;}
+  .login-box{padding:32px 20px;}
+  .login-title{font-size:19px;}
 }
  
 /* ── SMALL MOBILE (≤ 480px) ── */
 @media(max-width:480px){
-  .admin-header{height:52px;}
-  .admin-main{padding:16px 12px;}
+  .admin-main{padding:14px 10px;}
+  .admin-page-title h1{font-size:18px;}
  
-  .admin-page-title h1{font-size:20px;}
+  .stats-row{grid-template-columns:1fr 1fr;gap:7px;}
+  .stat-box{padding:9px 10px;}
+  .stat-box-label{font-size:8px;letter-spacing:1px;}
+  .stat-box-value{font-size:19px;}
  
-  /* Stats: 2 columnas compactas */
-  .stats-row{grid-template-columns:1fr 1fr;gap:8px;}
-  .stat-box{padding:10px 12px;}
-  .stat-box-label{font-size:8px;}
-  .stat-box-value{font-size:20px;}
- 
-  /* Tabla aún más compacta */
-  table{min-width:480px;}
-  thead th{font-size:7.5px;padding:8px 8px;}
-  tbody td{font-size:10px;padding:9px 8px;}
- 
-  /* Ocultar también la columna Duración en pequeños */
-  th:nth-child(6),td:nth-child(6){display:none;}
- 
-  /* Filters */
-  .filter-label{font-size:8px;}
+  .filters-bar{gap:8px;}
   .filter-select,.filter-input{font-size:12px;padding:10px 12px;}
  
-  .login-box{padding:28px 18px;}
-  .login-title{font-size:18px;}
+  tbody td{padding:9px 12px;font-size:11px;}
+  tbody td::before{min-width:80px;font-size:8px;}
+ 
+  .login-box{padding:26px 16px;}
 }
  
-/* ── TOUCH TARGETS ── */
+/* ── TOUCH TARGETS (pantallas táctiles) ── */
 @media(hover:none){
-  .btn-search{min-height:48px;}
-  .btn-action{min-height:36px;}
-  .btn-login{min-height:50px;}
+  .btn-search,.btn-login{min-height:48px;}
+  .btn-action{min-height:38px;}
   .btn-logout{min-height:36px;}
   .filter-select,.filter-input{min-height:46px;}
   .btn-modal-cancel,.btn-modal-confirm{min-height:46px;}
+  .login-input{min-height:46px;}
 }
 
 
