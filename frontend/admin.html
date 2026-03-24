@@ -370,6 +370,8 @@ tbody td{padding:14px 16px;font-size:12px;color:var(--deep);vertical-align:middl
 </head>
 <body>
 
+  api
+
 <!-- ══════════════════════════════════════════════════════
      LOGIN SCREEN
 ══════════════════════════════════════════════════════ -->
@@ -635,7 +637,7 @@ async function initPanel() {
 
 async function loadSpecialists() {
   try {
-    const res  = await fetch(`${API_URL}/api/specialists`);
+    const res  = await fetch(`${API_URL}/specialists`);
     const data = await res.json();
     if (!data.ok) return;
     A.specialists = data.data;
@@ -670,7 +672,7 @@ async function loadAppointments() {
   if (date)   params.append('date', date);
 
   try {
-    const res  = await fetch(`${API_URL}/api/appointments?${params.toString()}`);
+    const res  = await fetch(`${API_URL}/appointments?${params.toString()}`);
     const data = await res.json();
     if (!data.ok) throw new Error(data.error || 'Error al cargar citas');
 
@@ -762,7 +764,7 @@ function renderTable() {
 
 async function markCompleted(id) {
   try {
-    const res  = await fetch(`${API_URL}/api/appointments/${id}/complete`, {
+    const res  = await fetch(`${API_URL}/appointments/${id}/complete`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -807,7 +809,7 @@ async function executeCancel() {
   btn.textContent = 'Cancelando…';
 
   try {
-    const res  = await fetch(`${API_URL}/api/appointments/${cancelTargetId}/cancel`, {
+    const res  = await fetch(`${API_URL}/appointments/${cancelTargetId}/cancel`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
     });
