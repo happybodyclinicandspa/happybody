@@ -7,40 +7,40 @@
   NODE_VERSION = "18"
 
 # ─────────────────────────────────────────────────────────────
-#  SECURITY HEADERS — aplicados a todas las páginas
+#  SECURITY HEADERS
 # ─────────────────────────────────────────────────────────────
 [[headers]]
   for = "/*"
   [headers.values]
-    # Evita que la página se cargue en iframes de otros sitios (clickjacking)
+    # Evita clickjacking (cargar la web en un iframe de otro sitio)
     X-Frame-Options = "DENY"
 
-    # Evita que el navegador adivine el tipo MIME (MIME sniffing)
+    # Evita MIME sniffing
     X-Content-Type-Options = "nosniff"
 
-    # Controla qué información se manda en el header Referer
+    # Controla el header Referer
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-    # Desactiva características del navegador que no se usan
+    # Desactiva features del navegador que no se usan
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
 
-    # XSS Protection (legado, para navegadores viejos)
+    # XSS Protection (navegadores legados)
     X-XSS-Protection = "1; mode=block"
 
-    # Content Security Policy — lista blanca de recursos permitidos
-    # self          → mismo dominio
-    # fonts.googleapis + gstatic → Google Fonts
-    # happybody-production → tu API en Railway
-    # data:         → el logo está embebido como base64
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://happybody-production-b0bf.up.railway.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
-
-    # HSTS — fuerza HTTPS por 1 año (Netlify ya usa HTTPS, esto refuerza)
+    # HSTS — fuerza HTTPS por 1 año
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
+    # Content Security Policy
+    # 'unsafe-inline' en script-src y style-src es necesario porque:
+    #   - admin.html y mis-citas.html tienen <script> inline (no archivo externo)
+    #   - Todos los archivos usan style="..." inline en el HTML y JS generado
+    # Sin 'unsafe-inline' el CSS y JS dejan de funcionar (página en blanco/rota)
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://happybody-production-b0bf.up.railway.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
 # ─────────────────────────────────────────────────────────────
-#  REDIRIGE rutas al index.html (SPA single-page routing)
+#  REDIRECTS
 # ─────────────────────────────────────────────────────────────
-# Archivos HTML reales — servir directamente, NO redirigir al index
+# Páginas HTML directas — no redirigir al index
 [[redirects]]
   from   = "/admin.html"
   to     = "/admin.html"
@@ -51,7 +51,7 @@
   to     = "/mis-citas.html"
   status = 200
 
-# Resto de rutas → SPA (index.html)
+# Todo lo demás → SPA index.html
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
