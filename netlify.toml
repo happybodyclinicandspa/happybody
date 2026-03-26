@@ -3,11 +3,56 @@
   publish = "."
   command = "echo 'Static site — no build step needed'"
 
-# Redirige todas las rutas al index.html (necesario para SPA)
+[build.environment]
+  NODE_VERSION = "18"
+
+# ─────────────────────────────────────────────────────────────
+#  SECURITY HEADERS — aplicados a todas las páginas
+# ─────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Evita que la página se cargue en iframes de otros sitios (clickjacking)
+    X-Frame-Options = "DENY"
+
+    # Evita que el navegador adivine el tipo MIME (MIME sniffing)
+    X-Content-Type-Options = "nosniff"
+
+    # Controla qué información se manda en el header Referer
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Desactiva características del navegador que no se usan
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+
+    # XSS Protection (legado, para navegadores viejos)
+    X-XSS-Protection = "1; mode=block"
+
+    # Content Security Policy — lista blanca de recursos permitidos
+    # self          → mismo dominio
+    # fonts.googleapis + gstatic → Google Fonts
+    # happybody-production → tu API en Railway
+    # data:         → el logo está embebido como base64
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://happybody-production-b0bf.up.railway.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
+    # HSTS — fuerza HTTPS por 1 año (Netlify ya usa HTTPS, esto refuerza)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# ─────────────────────────────────────────────────────────────
+#  REDIRIGE rutas al index.html (SPA single-page routing)
+# ─────────────────────────────────────────────────────────────
+# Archivos HTML reales — servir directamente, NO redirigir al index
+[[redirects]]
+  from   = "/admin.html"
+  to     = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from   = "/mis-citas.html"
+  to     = "/mis-citas.html"
+  status = 200
+
+# Resto de rutas → SPA (index.html)
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
   status = 200
-
-[build.environment]
-  NODE_VERSION = "18"

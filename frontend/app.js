@@ -3,7 +3,8 @@
 //  Selección de un servicio por agenda, disponibilidad real desde MongoDB
 // ═══════════════════════════════════════════════════════════════
 
-const API_URL = 'https://happybody-production-b0bf.up.railway.app/api'; // ← REEMPLAZAR con tu URL real de Railway
+const API_URL       = 'https://happybody-production-b0bf.up.railway.app/api';
+const API_BASE_URL  = 'https://happybody-production-b0bf.up.railway.app';
 
 // ── Estado global ─────────────────────────────────────────────
 let S = {
@@ -64,7 +65,7 @@ async function checkHealth() {
   const dot  = document.getElementById('connection-dot');
   const pill = document.getElementById('connection-pill');
   try {
-    const res = await fetch(`https://happybody-production-b0bf.up.railway.app/health`);
+    const res = await fetch(`${API_BASE_URL}/health`);
     const data = await res.json();
     if (data.ok) {
       pill.textContent     = 'En línea';
