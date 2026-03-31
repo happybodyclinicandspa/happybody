@@ -337,3 +337,8 @@ async function seed() {
 }
 
 module.exports = seed;
+
+if (require.main === module) {
+  console.log("🚀 Ejecutando seed...");
+  seed();
+}
