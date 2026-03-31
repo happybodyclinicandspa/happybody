@@ -264,7 +264,13 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const filter = {};
-    if (req.query.date)         filter.date         = req.query.date;
+    if (req.query.date) {
+      filter.date = req.query.date;
+    } else if (req.query.dateFrom || req.query.dateTo) {
+      filter.date = {};
+      if (req.query.dateFrom) filter.date.$gte = req.query.dateFrom;
+      if (req.query.dateTo)   filter.date.$lte = req.query.dateTo;
+    }
     if (req.query.specialistId) filter.specialistId = req.query.specialistId;
     if (req.query.status)       filter.status       = req.query.status;
 
